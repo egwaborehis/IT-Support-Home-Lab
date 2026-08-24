@@ -59,3 +59,48 @@ System information was collected using built-in Windows tools including:
 - Command Prompt (`ipconfig`)
 
 Screenshots may be included where they provide useful evidence while ensuring that private information is removed or redacted.
+
+## Performance Baseline
+
+The system was observed under normal idle conditions using Windows Task Manager.
+
+### Performance at Idle
+
+| Resource | Observed Usage |
+|---|---:|
+| CPU | 3% |
+| Memory | 24% |
+| Disk | 4% |
+| Wi-Fi | 0 Kbps |
+| GPU | 1% |
+
+The system was not performing any intensive tasks during this observation.
+
+### Running Processes
+
+The Processes tab was also reviewed to identify applications and services using system resources.
+
+The highest visible CPU users included:
+
+- Google Chrome
+- Task Manager
+- Desktop Window Manager
+- Steam Client WebHelper
+- System and Windows background services
+
+No obvious resource bottleneck was identified during the baseline observation.
+
+### Observations
+
+The computer had relatively low CPU, disk and GPU utilisation while idle.
+
+Approximately 24–25% of the available memory was being used, leaving substantial memory available for additional applications and tasks.
+
+Task Manager itself contributed a small amount of CPU and memory usage while it was open. This is expected and was taken into consideration when observing the system.
+
+### Evidence
+
+- [Task Manager Performance](task-manager-idle.png)
+- [Running Processes](processes-idle.png)
+
+These screenshots provide evidence of the computer's normal operating condition during the baseline assessment.
