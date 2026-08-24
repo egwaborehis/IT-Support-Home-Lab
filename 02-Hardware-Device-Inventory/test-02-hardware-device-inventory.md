@@ -96,11 +96,11 @@ No corrective action was required because the tested devices were operating norm
 
 The following screenshots provide evidence of the investigation:
 
-- Device Manager overview
-- Hardware component inventory
-- Processor inventory
-- Wi-Fi device status
-- Graphics device status
-- Storage device status
+- [Device Manager Overview](device-manager%20overview.png)
+- [Hardware Components and Network Adapters](device-manager%20adapters.png)
+- [Processor Inventory](device-manager%20processors.png)
+- [Wi-Fi Device Status](Wi-Fi%20device%20status.png)
+- [Graphics Device Status](graphics%20device%20status.png)
+- [Storage Device Status](storage%20device%20status.png)
 
-Private or unnecessary system information should be removed or redacted before publishing evidence publicly.
+Private or unnecessary system information should be removed or redacted before publishing evidence.
