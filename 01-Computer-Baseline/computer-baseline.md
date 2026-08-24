@@ -102,7 +102,7 @@ Task Manager itself contributed a small amount of CPU and memory usage while it 
 
 The following screenshots provide evidence of the computer's normal operating condition during the baseline assessment:
 
-- [Task Manager Performance](task-manager-idle.png)
-- [Running Processes](processes-idle.png)
+- [Task Manager Performance](./task-manager-idle.png)
+- [Running Processes](./processes-idle.png)
 
 These screenshots show the system's resource usage and running processes during normal operation.
