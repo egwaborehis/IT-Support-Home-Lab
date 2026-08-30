@@ -1,1 +1,429 @@
+# Test 04 — Software & Application Troubleshooting
 
+## Overview
+
+This test was created to practise a basic software troubleshooting process that could be used in an IT support or help desk environment.
+
+The scenario involved a user reporting that Microsoft Notepad was not responding correctly and would not close normally.
+
+Instead of making changes to the computer that isn't needed, I tried this troubleshooting process:
+
+1. Gather information from the user.
+2. Attempt to reproduce the reported problem.
+3. Check whether the application was still running.
+4. Check the application's resource usage.
+5. Investigate Windows Event Viewer.
+6. Determine whether any evidence pointed to a specific fault.
+7. Avoid making unnecessary changes when there was no clear fault.
+8. Document the findings and conclusion.
+
+The important part of this exercise was learning that troubleshooting does not always result in a repair. If a problem cannot be reproduced and there is no evidence of a fault, the correct action can be to document that no fault was found during the investigation.
+
+---
+
+# 1. Simulated User Report
+
+The simulated user reported:
+
+> "Microsoft Notepad isn't responding properly. It opened earlier, but now it won't close normally."
+
+The user had already tried clicking the close button several times without success.
+
+The purpose of the investigation was to determine whether the problem could be reproduced and whether there was any evidence of an underlying software problem.
+
+---
+
+# 2. Initial Questions
+
+Before investigating the computer, I asked several questions to gather more information about the problem.
+
+The questions included:
+
+- Has this happened before?
+- Does the problem happen with other Microsoft applications?
+- Is the network connection working normally?
+- How many times did you try clicking the close button?
+- Has the computer been updated?
+- How many other applications are currently open?
+
+These questions were intended to determine whether the issue appeared to be isolated to Notepad or whether there could be a wider Windows, software, network or performance problem.
+
+---
+
+# 3. User Responses
+
+The simulated user provided the following information:
+
+| Question | Response |
+|---|---|
+| Has this happened before? | No, this was the first time the problem had been noticed. |
+| Do other Microsoft applications have the problem? | No. Microsoft Word and Microsoft Edge were working normally. |
+| Is the network working? | Yes. Websites were loading normally. |
+| How many times was the close button clicked? | Approximately three times. |
+| Has Windows been updated? | Windows Update reported that the system was up to date. |
+| How many other applications were open? | Chrome and File Explorer were open. |
+
+---
+
+# 4. Initial Assessment
+
+The answers helped narrow down the possible causes.
+
+The problem appeared to be isolated to Notepad because other Microsoft applications were working normally.
+
+There was also no obvious network problem, and the computer did not have a large number of demanding applications running.
+
+The issue had also only happened once, so there was not enough information to identify it as a recurring problem.
+
+At this stage, I decided to attempt to reproduce the reported behaviour rather than immediately changing any settings.
+
+---
+
+# 5. Attempting to Reproduce the Problem
+
+I opened Microsoft Notepad and entered test text:
+
+```text
+Hello this is a test.
+```
+
+I then closed Notepad normally using the close button.
+
+## Result
+
+Notepad closed normally.
+
+The reported problem could therefore **not be reproduced** during the investigation.
+
+This is an important troubleshooting result.
+
+A technician should not claim that a problem has been fixed if the problem cannot be reproduced or there is no evidence showing what caused it.
+
+Instead, the investigation should continue using other available information.
+
+---
+
+# 6. Checking the Notepad Process
+
+The next step was to check whether Notepad had remained running in the background after being closed.
+
+This was checked using **Windows Task Manager**.
+
+## Why check the process?
+
+An application and its process are related but are not exactly the same thing.
+
+The application is what the user interacts with, while the process is the running instance of the software within Windows.
+
+Sometimes an application can appear to close while its process continues running in the background.
+
+A process that remains running could potentially contribute to problems such as:
+
+- The application not reopening correctly
+- Multiple instances of the application running
+- Unnecessary resource usage
+- The application appearing stuck
+
+## Result
+
+After closing Notepad normally, I checked Task Manager.
+
+Notepad was no longer present in the list of running processes.
+
+This indicates that the Notepad process had also terminated normally.
+
+There was therefore no evidence of a stuck Notepad process.
+
+---
+
+# 7. Checking Notepad Resource Usage
+
+I then opened Notepad again and left it running while checking it in Task Manager.
+
+The following resource information was observed:
+
+| Resource | Observed result |
+|---|---:|
+| CPU | Approximately 1.5% |
+| Memory | Approximately 37.8 MB |
+| Disk | Approximately 0.1 MB/s |
+| Network | 0 Mbps |
+
+These values were recorded while Notepad was open with a small amount of test text.
+
+### Evidence
+
+[View Notepad resource usage](notepad-resource-usage.png)
+
+## Interpretation
+
+The resource usage was low.
+
+Notepad was not consuming a large amount of CPU, memory, disk activity or network bandwidth during the test.
+
+This provides no evidence that excessive resource usage was responsible for the reported problem.
+
+It is important to remember that resource usage can change depending on what an application is doing, so these values represent the conditions observed during this particular test.
+
+---
+
+# 8. Investigating Windows Event Viewer
+
+The next stage was to investigate Windows Event Viewer.
+
+Event Viewer is a Windows tool that records information about events occurring on the system.
+
+It can contain different types of events, including:
+
+- Information
+- Warnings
+- Errors
+
+Event Viewer can be useful when investigating software problems because it may contain information about events that occurred before a technician started investigating the computer.
+
+I opened:
+
+```text
+Event Viewer
+    ↓
+Windows Logs
+    ↓
+Application
+```
+
+I inspected the Application log for relevant information.
+
+---
+
+# 9. Searching for Notepad-Related Events
+
+There were some events in the Application log, including events marked as errors.
+
+However, an important part of troubleshooting is not assuming that every error in Event Viewer is related to the user's problem.
+
+An Event Viewer entry is a clue that needs to be investigated rather than automatically being treated as the cause.
+
+I therefore searched the Application log for:
+
+```text
+Notepad
+```
+
+A Notepad-related event was found.
+
+### Evidence
+
+[View Event Viewer Notepad investigation](event-viewer-notepad-investigation.png)
+
+The event was:
+
+```text
+Source:
+Microsoft-Windows-AppXDeploymentServer/Operational
+
+Event ID:
+2562
+
+Level:
+Information
+```
+
+The event mentioned the Microsoft Windows Notepad package and a system path that could not be found.
+
+---
+
+# 10. Interpreting the Event
+
+Although the event mentioned Microsoft Windows Notepad, it was not treated as proof that Notepad itself was malfunctioning.
+
+The event was classified as:
+
+```text
+Information
+```
+
+rather than an application crash or Notepad error.
+
+This is an important troubleshooting lesson.
+
+Finding an event that contains the name of the affected application does not automatically mean:
+
+> "This is what caused the problem."
+
+The event needs to be considered alongside the other evidence.
+
+In this investigation:
+
+- Notepad opened normally.
+- Notepad closed normally.
+- The Notepad process terminated correctly.
+- Resource usage was low.
+- Other Microsoft applications worked normally.
+- The network was working normally.
+- Windows reported that it was up to date.
+- No clear Notepad application failure was identified.
+
+Therefore, there was not enough evidence to link the Event Viewer entry to the user's reported problem.
+
+---
+
+# 11. Why I Did Not Make Unnecessary Changes
+
+At this stage, I could have attempted actions such as:
+
+- Reinstalling Notepad
+- Changing Windows settings
+- Ending unrelated processes
+- Removing files
+- Reinstalling drivers
+- Changing network settings
+
+However, there was no evidence that these actions were necessary.
+
+Making unnecessary changes could introduce new problems or make it harder to identify the original cause.
+
+A better support approach is to make changes based on evidence.
+
+Since the problem could not be reproduced and no clear fault was identified, no unnecessary system changes were made.
+
+---
+
+# 12. Troubleshooting Decision
+
+The investigation produced the following results:
+
+| Investigation | Result |
+|---|---|
+| User reported Notepad would not close | Report received |
+| Attempted to reproduce problem | Could not reproduce |
+| Notepad closed normally | Pass |
+| Notepad process remained after closing | No |
+| Notepad resource usage | Low |
+| Other Microsoft applications affected | No |
+| Network problem identified | No |
+| Windows updates pending | No |
+| Notepad-related Event Viewer information found | Yes |
+| Clear Notepad application failure identified | No |
+
+The Event Viewer entry was recorded as information rather than being treated as the cause of the reported problem.
+
+---
+
+# 13. Final Diagnosis
+
+### Result: No fault reproduced
+
+The reported Notepad problem could not be reproduced during the investigation.
+
+Notepad operated normally during testing, its process terminated correctly after closing, and its resource usage was low.
+
+A Notepad-related Event Viewer entry was found, but the event was an informational AppX deployment event rather than clear evidence of a Notepad crash or application failure.
+
+There was therefore insufficient evidence to diagnose a specific fault.
+
+---
+
+# 14. What I Would Do in a Real IT Support Environment
+
+If this were a real support ticket and the user continued experiencing the problem, I would document the investigation and ask the user to report the issue again if it occurred.
+
+If the problem happened again, I would try to capture more specific information while the problem was occurring.
+
+For example:
+
+- What exactly happens when the user clicks Close?
+- Does the window become unresponsive?
+- Does Windows display "Not Responding"?
+- Does the application remain in Task Manager?
+- Does an error message appear?
+- Does Event Viewer record an event at the same time?
+- Does the problem happen every time or only occasionally?
+
+This would provide better evidence for a future investigation.
+
+If the problem became reproducible, further troubleshooting could then be based on the evidence collected.
+
+---
+
+# 15. Troubleshooting Method Demonstrated
+
+This exercise demonstrated a basic support workflow:
+
+```text
+User reports problem
+        ↓
+Gather information
+        ↓
+Attempt to reproduce
+        ↓
+Check application/process
+        ↓
+Check resource usage
+        ↓
+Investigate Event Viewer
+        ↓
+Compare evidence
+        ↓
+Avoid unnecessary changes
+        ↓
+Document result
+```
+
+This approach is useful because it prevents a technician from immediately making changes without understanding the problem.
+
+---
+
+# 16. Skills Demonstrated
+
+This test gave me practical experience with:
+
+- User questioning
+- Initial problem assessment
+- Software troubleshooting
+- Microsoft Notepad
+- Windows Task Manager
+- Windows processes
+- CPU and memory monitoring
+- Event Viewer
+- Windows Application logs
+- Event interpretation
+- Basic troubleshooting methodology
+- Evidence collection
+- Technical documentation
+- Privacy-aware evidence handling
+- Knowing when not to make unnecessary system changes
+
+---
+
+# 17. Evidence
+
+The following screenshots provide evidence of the practical investigation:
+
+1. [Notepad Resource Usage](notepad-resource-usage.png)
+2. [Event Viewer Notepad Investigation](event-viewer-notepad-investigation.png)
+
+The screenshots were reviewed before being added to the public repository to avoid exposing unnecessary personal information.
+
+---
+
+# 18. Conclusion
+
+This test demonstrated that troubleshooting is not always about finding something to repair.
+
+The reported Notepad problem could not be reproduced, and the investigation did not identify a clear software fault.
+
+Instead of making unnecessary changes, I used Task Manager and Event Viewer to gather additional information and then documented the findings.
+
+The investigation helped me understand the importance of:
+
+- Asking the right questions before making changes
+- Reproducing a reported problem where possible
+- Checking processes rather than only looking at the application window
+- Looking at resource usage
+- Using Event Viewer as a source of diagnostic information
+- Distinguishing useful evidence from unrelated events
+- Avoiding assumptions
+- Avoiding unnecessary changes
+- Documenting when no fault can be reproduced
+
+This provides a foundation for handling software and application-related support tickets in a more structured way.
