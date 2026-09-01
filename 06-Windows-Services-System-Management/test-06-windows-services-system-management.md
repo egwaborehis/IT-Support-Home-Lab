@@ -368,6 +368,6 @@ This test gave me practical experience working with Windows Services and showed 
 
 I investigated the Print Spooler service, checked its configuration, performed a controlled stop and restart, confirmed that it returned to the Running state, and investigated its recovery settings.
 
-Although this was a controlled lab test rather than a real printer fault, the process reflects a genuine help desk troubleshooting technique.
+Although this was a controlled lab test rather than a real printer fault, I think this process reflects a genuine help desk troubleshooting technique.
 
 The main lesson was that restarting a service should not be treated as the final solution by itself. The technician should understand what the service does, make a controlled change, and then verify whether the original user problem has actually been resolved.
